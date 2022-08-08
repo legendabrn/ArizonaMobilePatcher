@@ -28,6 +28,13 @@ const std::vector<stInfo> arizona_ip{
     convert("80.66.82.144")
 };
 
+void new_strcpy(char* dest, size_t size, char* src) {
+    size_t i;
+    for (size_t i = 0; i <= size && src[i]; i++) {
+        dest[i] = src[i];
+    }
+}
+
 int main() {
     std::cout << "[patcher] created by legendabrn[08.08.2022]" << std::endl << std::endl;
     std::cout << "[patcher] please input ip:port = ";
@@ -74,11 +81,7 @@ int main() {
                 * patch ip
                 */
                 std::cout << "[patcher] start patching IP" << std::endl;
-                for (unsigned char s : get_ip) {
-                    static int pos = 0;
-                    buffer[result - buffer.begin() + pos] = s;
-                    pos++;
-                }
+                new_strcpy(reinterpret_cast<char*>(&buffer[result - buffer.begin()]), length, const_cast<char*>(get_ip.c_str()));
                 std::cout << "[patcher] end patching IP" << std::endl << std::endl;
                 /*
                 * patch port
